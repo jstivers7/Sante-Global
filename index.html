@@ -126,6 +126,10 @@ nav.scrolled {
   font-weight: 600;
   color: var(--text-primary);
   letter-spacing: 0.5px;
+  transition: color 0.4s ease;
+}
+nav.scrolled .nav-logo {
+  color: var(--text-primary);
 }
 .nav-links {
   display: flex;
@@ -210,11 +214,15 @@ nav.scrolled {
   flex-direction: column;
   justify-content: center;
   overflow: hidden;
+  padding: 16px;
+  padding-top: 88px;
 }
 .hero-bg-img {
   position: absolute;
-  inset: 0;
+  inset: 88px 16px 16px 16px;
   z-index: 0;
+  border-radius: 20px;
+  overflow: hidden;
 }
 .hero-bg-img img {
   width: 100%;
@@ -224,7 +232,8 @@ nav.scrolled {
 }
 .hero-overlay {
   position: absolute;
-  inset: 0;
+  inset: 88px 16px 16px 16px;
+  border-radius: 20px;
   background: linear-gradient(180deg,
     rgba(26,46,35,0.45) 0%,
     rgba(26,46,35,0.25) 40%,
@@ -298,6 +307,7 @@ nav.scrolled {
   position: relative;
   aspect-ratio: 4/3;
   overflow: hidden;
+  border-radius: 20px;
 }
 .mission-image img {
   width: 100%;
@@ -403,6 +413,7 @@ nav.scrolled {
   position: relative;
   overflow: hidden;
   min-height: 500px;
+  border-radius: 20px;
 }
 .steps-image img {
   position: absolute;
@@ -469,6 +480,7 @@ nav.scrolled {
 .values-images .v-img {
   aspect-ratio: 3/4;
   overflow: hidden;
+  border-radius: 20px;
 }
 .values-images .v-img img {
   width: 100%;
@@ -523,6 +535,7 @@ nav.scrolled {
   flex-direction: column;
   justify-content: flex-end;
   min-height: 240px;
+  border-radius: 20px;
 }
 .news-card:hover {
   border-color: var(--border-hover);
@@ -539,23 +552,19 @@ nav.scrolled {
 }
 .news-card-leaf {
   position: absolute;
-  top: -20px;
-  right: -20px;
-  width: 160px;
-  height: 160px;
+  inset: 0;
   opacity: 0;
-  transition: all 0.5s ease;
+  transition: opacity 0.6s ease;
   z-index: 1;
 }
 .news-card-leaf img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  filter: saturate(0.6) opacity(0.5);
+  object-fit: cover;
+  filter: brightness(0.85) saturate(0.7);
 }
 .news-card:hover .news-card-leaf {
-  opacity: 0.6;
-  transform: translate(-10px, 10px);
+  opacity: 0.35;
 }
 
 /* ===== CTA BANNER ===== */
@@ -567,10 +576,14 @@ nav.scrolled {
   justify-content: center;
   text-align: center;
   overflow: hidden;
+  margin: 0 16px;
+  border-radius: 20px;
 }
 .cta-banner-bg {
   position: absolute;
   inset: 0;
+  border-radius: 20px;
+  overflow: hidden;
 }
 .cta-banner-bg img {
   width: 100%;
@@ -581,6 +594,7 @@ nav.scrolled {
 .cta-banner-overlay {
   position: absolute;
   inset: 0;
+  border-radius: 20px;
   background: rgba(26, 46, 35, 0.5);
 }
 .cta-banner-content {
@@ -623,7 +637,7 @@ footer {
 }
 .footer-top {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr;
   gap: 60px;
   margin-bottom: 80px;
 }
@@ -725,34 +739,6 @@ footer {
 <nav id="mainNav">
   <a href="#" class="nav-logo">Santé Global</a>
   <div class="nav-links">
-    <div class="nav-link has-dropdown">
-      Focus Areas
-      <div class="nav-dropdown">
-        <div class="nav-dropdown-label">Sectors</div>
-        <a href="#">Human Health</a>
-        <a href="#">Environmental Health</a>
-        <a href="#">Social Health</a>
-        <a href="#">Organizational Health</a>
-      </div>
-    </div>
-    <div class="nav-link has-dropdown">
-      Capabilities
-      <div class="nav-dropdown">
-        <a href="#">Brand Strategy</a>
-        <a href="#">Identity & Naming</a>
-        <a href="#">Communications Systems</a>
-        <a href="#">Employer Branding</a>
-      </div>
-    </div>
-    <div class="nav-link has-dropdown">
-      About
-      <div class="nav-dropdown">
-        <a href="#">About Us</a>
-        <a href="#">Methodology</a>
-        <a href="#">Leadership</a>
-      </div>
-    </div>
-    <a href="#" class="nav-link">News & Insights</a>
     <a href="#" class="nav-cta-btn">contact us</a>
   </div>
 </nav>
@@ -876,13 +862,13 @@ footer {
     <div class="news-cards">
       <a href="#" class="news-card reveal">
         <div class="news-card-leaf">
-          <img src="https://images.unsplash.com/photo-1518882862532-8a2c570a0f53?w=300&q=80" alt="leaf">
+          <img src="https://images.unsplash.com/photo-1546556396-11d4f4f85e93?w=300&q=80" alt="leaf">
         </div>
         <h4>Why Biotech Brands Must Lead with Purpose, Not Just Pipeline</h4>
       </a>
       <a href="#" class="news-card reveal reveal-d1">
         <div class="news-card-leaf">
-          <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=300&q=80" alt="leaf">
+          <img src="https://images.unsplash.com/photo-1488330890490-c291ecf62571?w=300&q=80" alt="leaf">
         </div>
         <h4>The Shift in Environmental Messaging: From Sacrifice to Self-Reliance</h4>
       </a>
@@ -893,7 +879,7 @@ footer {
 <!-- CTA BANNER — maps to Amyris "Partner with us" -->
 <section class="cta-banner">
   <div class="cta-banner-bg">
-    <img src="https://images.unsplash.com/photo-1504198453319-5ce911bafcde?w=1600&q=80" alt="Partnership">
+    <img src="https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=1600&q=80" alt="">
   </div>
   <div class="cta-banner-overlay"></div>
   <div class="cta-banner-content">
@@ -910,17 +896,8 @@ footer {
         <p class="footer-brand-tagline">There is no permanent state of normal.™</p>
       </div>
       <div class="footer-col">
-        <h5>General</h5>
-        <a href="#">Focus Areas</a>
-        <a href="#">Capabilities</a>
-        <a href="#">About</a>
-        <a href="#">News & Insights</a>
-      </div>
-      <div class="footer-col">
-        <h5>Other</h5>
-        <a href="#">Methodology</a>
-        <a href="#">Leadership</a>
-        <a href="#">Careers</a>
+        <h5>Contact</h5>
+        <a href="#">Contact Us</a>
       </div>
       <div class="footer-col">
         <h5>Follow Us</h5>
