@@ -236,7 +236,7 @@ nav.scrolled .nav-logo {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(0.45) saturate(0.75);
+  filter: brightness(0.6) saturate(0.8);
   z-index: 1;
 }
 .hero-fallback-img {
@@ -249,10 +249,10 @@ nav.scrolled .nav-logo {
   inset: 88px 16px 16px 16px;
   border-radius: 20px;
   background: linear-gradient(180deg,
-    rgba(26,46,35,0.45) 0%,
-    rgba(26,46,35,0.25) 40%,
-    rgba(26,46,35,0.55) 75%,
-    rgba(26,46,35,0.85) 100%
+    rgba(26,46,35,0.25) 0%,
+    rgba(26,46,35,0.1) 40%,
+    rgba(26,46,35,0.35) 75%,
+    rgba(26,46,35,0.65) 100%
   );
   z-index: 1;
 }
@@ -314,7 +314,7 @@ nav.scrolled .nav-logo {
   position: absolute;
   inset: 0;
 }
-.hww-bg img {
+.hww-bg video {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -323,7 +323,7 @@ nav.scrolled .nav-logo {
   opacity: 0;
   transition: opacity 1s ease;
 }
-.hww-bg img.active {
+.hww-bg video.active {
   opacity: 1;
 }
 .hww-overlay {
@@ -1113,11 +1113,12 @@ footer {
   </div>
   <div class="hww-container reveal-scale">
     <div class="hww-bg">
-      <img src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=1200&q=80" alt="Operating System">
-      <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&q=80" alt="Insight">
-      <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1200&q=80" alt="Strategy">
-      <img src="https://images.unsplash.com/photo-1531545514256-b1400bc00f31?w=1200&q=80" alt="Activation">
-      <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&q=80" alt="Sustainment">
+      <video data-hww-vid="default" autoplay muted loop playsinline class="active" src="how_we_work_-_no_topic.mp4"></video>
+      <video data-hww-vid="0" muted loop playsinline src="how_we_work_-_os.mp4"></video>
+      <video data-hww-vid="1" muted loop playsinline src="how_we_work_-_insight.mp4"></video>
+      <video data-hww-vid="2" muted loop playsinline src="how_we_work_-_strategy.mp4"></video>
+      <video data-hww-vid="3" muted loop playsinline src="how_we_work_-_activation.mp4"></video>
+      <video data-hww-vid="4" muted loop playsinline src="how_we_work_-_sustainment.mp4"></video>
     </div>
     <div class="hww-overlay"></div>
     <div class="hww-items stagger-children">
@@ -1385,21 +1386,38 @@ stepItems.forEach(item => {
   });
 });
 
-// How We Work items with image switching (toggle)
+// How We Work items with video switching (toggle)
 const hwwItems = document.querySelectorAll('.hww-item');
-const hwwImages = document.querySelectorAll('.hww-bg img');
+const hwwVideos = document.querySelectorAll('.hww-bg video');
+const hwwDefault = document.querySelector('.hww-bg video[data-hww-vid="default"]');
+
 hwwItems.forEach(item => {
   item.addEventListener('click', () => {
     const wasActive = item.classList.contains('active');
     hwwItems.forEach(i => i.classList.remove('active'));
-    hwwImages.forEach(img => img.classList.remove('active'));
+    hwwVideos.forEach(vid => {
+      vid.classList.remove('active');
+      vid.pause();
+    });
     if (!wasActive) {
       item.classList.add('active');
-      const idx = parseInt(item.dataset.hww);
-      if (hwwImages[idx]) hwwImages[idx].classList.add('active');
+      const idx = item.dataset.hww;
+      const vid = document.querySelector(`.hww-bg video[data-hww-vid="${idx}"]`);
+      if (vid) {
+        vid.classList.add('active');
+        vid.currentTime = 0;
+        vid.play();
+      }
+    } else {
+      // Nothing active, show default
+      hwwDefault.classList.add('active');
+      hwwDefault.play();
     }
   });
 });
+
+// Start default video playing
+hwwDefault.play();
 </script>
 </body>
 </html>
