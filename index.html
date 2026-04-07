@@ -231,6 +231,19 @@ nav.scrolled .nav-logo {
   object-fit: cover;
   filter: brightness(0.45) saturate(0.75);
 }
+.hero-bg-img video {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.45) saturate(0.75);
+  z-index: 1;
+}
+.hero-fallback-img {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
 .hero-overlay {
   position: absolute;
   inset: 88px 16px 16px 16px;
@@ -336,14 +349,14 @@ nav.scrolled .nav-logo {
 }
 .hww-item {
   flex: 1;
-  padding: 24px 20px;
+  padding: 16px 20px 20px;
   cursor: pointer;
   transition: all 0.4s ease;
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  min-height: 72px;
+  min-height: 90px;
   background: rgba(255,255,255,0.25);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -360,7 +373,7 @@ nav.scrolled .nav-logo {
   position: relative;
   z-index: 1;
   display: flex;
-  align-items: baseline;
+  align-items: flex-start;
   justify-content: space-between;
 }
 .hww-item-title {
@@ -375,8 +388,10 @@ nav.scrolled .nav-logo {
   font-family: var(--font-display);
   font-size: 0.75rem;
   color: var(--text-primary);
-  position: relative;
-  z-index: 1;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 3;
 }
 .hww-item-desc {
   font-size: 0.85rem;
@@ -722,25 +737,27 @@ nav.scrolled .nav-logo {
   max-width: 1400px;
   margin: 0 auto;
 }
-.leadership-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 60px;
-  gap: 40px;
+.leadership-layout {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 60px;
+  align-items: start;
 }
-.leadership-header-left h3 {
+.leadership-header {
+  position: sticky;
+  top: 120px;
+}
+.leadership-header h3 {
   font-family: var(--font-display);
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--text-primary);
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
-.leadership-header-left p {
+.leadership-header p {
   font-size: 0.92rem;
   color: var(--text-secondary);
   font-weight: 300;
-  max-width: 560px;
   line-height: 1.75;
 }
 .leadership-cards {
@@ -1032,7 +1049,8 @@ footer {
   .values-top { grid-template-columns: 1fr; gap: 40px; }
   .news-section { padding: 80px 28px; }
   .leadership-section { padding: 80px 28px; }
-  .leadership-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .leadership-layout { grid-template-columns: 1fr; gap: 40px; }
+  .leadership-header { position: static; }
   .cta-banner-content { padding: 60px 28px; }
   footer { padding: 60px 28px 32px; }
   .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
@@ -1075,7 +1093,11 @@ footer {
 <!-- HERO -->
 <section class="hero">
   <div class="hero-bg-img">
-    <img src="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?w=1600&q=80" alt="Nature landscape">
+    <video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?w=1600&q=80">
+      <source src="https://videos.pexels.com/video-files/7348438/7348438-uhd_2560_1440_30fps.mp4" type="video/mp4">
+      <source src="https://videos.pexels.com/video-files/7348438/7348438-hd_1920_1080_30fps.mp4" type="video/mp4">
+    </video>
+    <img src="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?w=1600&q=80" alt="Nature landscape" class="hero-fallback-img">
   </div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
@@ -1101,37 +1123,37 @@ footer {
     <div class="hww-overlay"></div>
     <div class="hww-items stagger-children">
       <div class="hww-item stagger-item" data-hww="0">
+        <span class="hww-item-num">01</span>
         <div class="hww-item-header">
           <span class="hww-item-title">The Santé Operating System</span>
-          <span class="hww-item-num">01</span>
         </div>
         <p class="hww-item-desc">Every engagement runs through the same operating system from research to the ongoing work of publishing and iteration.</p>
       </div>
       <div class="hww-item stagger-item" data-hww="1">
+        <span class="hww-item-num">02</span>
         <div class="hww-item-header">
           <span class="hww-item-title">Insight</span>
-          <span class="hww-item-num">02</span>
         </div>
         <p class="hww-item-desc">Behavioral, cultural, market, and organizational research. Human and machine intelligence working together to surface patterns, risks, and opportunities faster.</p>
       </div>
       <div class="hww-item stagger-item" data-hww="2">
+        <span class="hww-item-num">03</span>
         <div class="hww-item-header">
           <span class="hww-item-title">Strategy</span>
-          <span class="hww-item-num">03</span>
         </div>
         <p class="hww-item-desc">Narrative, brand positioning, journeys, and communication system design. Clear decision frameworks that help leaders move, even in ambiguity.</p>
       </div>
       <div class="hww-item stagger-item" data-hww="3">
+        <span class="hww-item-num">04</span>
         <div class="hww-item-header">
           <span class="hww-item-title">Activation</span>
-          <span class="hww-item-num">04</span>
         </div>
         <p class="hww-item-desc">Storytelling, design, content, campaigns, and internal communications. Brand and product narratives, video, and experiences across channels.</p>
       </div>
       <div class="hww-item stagger-item" data-hww="4">
+        <span class="hww-item-num">05</span>
         <div class="hww-item-header">
           <span class="hww-item-title">Sustainment</span>
-          <span class="hww-item-num">05</span>
         </div>
         <p class="hww-item-desc">Ongoing publishing, optimization, and internal enablement. Systems and toolkits that keep teams shipping, not reinventing, over time.</p>
       </div>
@@ -1250,14 +1272,13 @@ footer {
 <!-- WHO LEADS SANTÉ — maps to Amyris "Explore the Chemistry of Life" -->
 <section class="leadership-section">
   <div class="leadership-inner">
-    <div class="leadership-header">
-      <div class="leadership-header-left">
+    <div class="leadership-layout">
+      <div class="leadership-header">
         <h3 class="reveal">Who Leads Santé</h3>
         <p class="reveal reveal-d1">Santé is led by two complementary partners who have worked together for more than two decades. Many clients begin with Mike or Ed and stay because of the integrated system and team behind them.</p>
       </div>
-    </div>
-    <div class="leadership-cards">
-      <a href="#" class="leadership-card reveal-left">
+      <div class="leadership-cards">
+        <a href="#" class="leadership-card reveal-left">
         <div class="leadership-card-img">
           <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&q=80" alt="">
         </div>
@@ -1277,6 +1298,7 @@ footer {
           <p>Ed leads Santé Global's strategic direction, focusing on client growth and success. With over 20 years of experience in customer behavior research, Ed has partnered with brands such as Merck, Maybelline, and Shake Shack to align corporate strategy with impactful solutions.</p>
         </div>
       </a>
+    </div>
     </div>
   </div>
 </section>
