@@ -90,7 +90,7 @@ a { text-decoration: none; color: inherit; }
   text-transform: lowercase;
   border: none;
   cursor: pointer;
-  border-radius: 0;
+  border-radius: 8px;
   transition: all 0.3s ease;
 }
 .btn-deny {
@@ -203,6 +203,7 @@ nav.scrolled .nav-logo {
   text-transform: lowercase;
   transition: all 0.3s;
   margin-left: 8px;
+  border-radius: 8px;
 }
 .nav-cta-btn:hover { background: var(--green-mid); }
 
@@ -264,55 +265,136 @@ nav.scrolled .nav-logo {
   color: rgba(255,255,255,0.75);
 }
 
-/* ===== MISSION SECTION ===== */
-.mission-section {
-  padding: 120px 48px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  max-width: 1400px;
+/* ===== HOW WE WORK SECTION (Amyris "Accelerate" style) ===== */
+.hww-section {
+  padding: 120px 16px 0;
+  max-width: 1432px;
   margin: 0 auto;
-  align-items: center;
 }
-.mission-text h3 {
+.hww-header {
+  padding: 0 32px;
+  margin-bottom: 40px;
+}
+.hww-header h2 {
   font-family: var(--font-display);
-  font-size: 1.1rem;
+  font-size: clamp(2rem, 3.5vw, 3rem);
   font-weight: 400;
-  font-style: italic;
-  color: var(--green-mid);
-  margin-bottom: 28px;
+  color: var(--text-primary);
+  line-height: 1.2;
+  margin-bottom: 20px;
 }
-.mission-text p {
+.hww-header p {
   font-size: 1rem;
   line-height: 1.85;
   color: var(--text-secondary);
   font-weight: 300;
-  margin-bottom: 20px;
+  max-width: 680px;
 }
-.mission-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 36px;
-}
-.mission-tag {
-  padding: 10px 22px;
-  border: 1px solid var(--border-mid);
-  background: var(--green-subtle);
-  font-size: 0.78rem;
-  font-weight: 400;
-  color: var(--text-primary);
-}
-.mission-image {
+.hww-container {
   position: relative;
-  aspect-ratio: 4/3;
-  overflow: hidden;
   border-radius: 20px;
+  overflow: hidden;
+  min-height: 560px;
+  background: var(--bg-dark);
 }
-.mission-image img {
+.hww-bg {
+  position: absolute;
+  inset: 0;
+}
+.hww-bg img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+.hww-bg img.active {
+  opacity: 1;
+}
+.hww-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+    rgba(26,46,35,0.1) 0%,
+    rgba(26,46,35,0.25) 40%,
+    rgba(26,46,35,0.85) 100%
+  );
+  z-index: 1;
+}
+.hww-items {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 12px 12px;
+  gap: 8px;
+}
+.hww-item {
+  flex: 1;
+  padding: 24px 20px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 72px;
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 14px 14px 0 0;
+}
+.hww-item:hover {
+  background: rgba(255,255,255,0.35);
+}
+.hww-item.active {
+  background: rgba(255,255,255,0.4);
+}
+.hww-item-header {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.hww-item-title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  position: relative;
+  z-index: 1;
+}
+.hww-item-num {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  color: var(--text-primary);
+  position: relative;
+  z-index: 1;
+}
+.hww-item-desc {
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: var(--text-primary);
+  font-weight: 400;
+  position: relative;
+  z-index: 1;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.5s ease, opacity 0.4s ease, margin 0.5s ease;
+  margin-top: 0;
+}
+.hww-item.active .hww-item-desc {
+  max-height: 200px;
+  opacity: 1;
+  margin-top: 12px;
 }
 
 /* ===== NUMBERED STEPS ===== */
@@ -521,7 +603,7 @@ nav.scrolled .nav-logo {
 }
 .news-cards {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 20px;
 }
 .news-card {
@@ -548,12 +630,77 @@ nav.scrolled .nav-logo {
   color: var(--text-primary);
   line-height: 1.4;
   position: relative;
+  z-index: 3;
+  transition: color 0.6s ease;
+}
+.card-content {
+  position: relative;
+  z-index: 3;
+}
+.card-label {
+  font-family: var(--font-body) !important;
+  font-size: 0.72rem !important;
+  font-weight: 600 !important;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: var(--green-mid) !important;
+  margin-bottom: 12px;
+}
+.card-quote {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--text-primary);
+  line-height: 1.5;
+  margin-bottom: 20px;
+  transition: color 0.6s ease;
+}
+.card-list {
+  list-style: none;
+  padding: 0;
+}
+.card-list li {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  padding: 4px 0;
+  padding-left: 16px;
+  position: relative;
+  font-weight: 300;
+  transition: color 0.6s ease;
+}
+.card-list li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  color: var(--green-mid);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+.news-card:hover .card-label { color: rgba(255,255,255,0.7) !important; }
+.news-card:hover .card-quote { color: #ffffff; }
+.news-card:hover .card-list li { color: rgba(255,255,255,0.8); }
+.news-card:hover .card-list li::before { color: rgba(255,255,255,0.5); }
+.news-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  background: linear-gradient(180deg, transparent 20%, rgba(26,46,35,0.7) 100%);
   z-index: 2;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+.news-card:hover::after {
+  opacity: 1;
+}
+.news-card:hover h4 {
+  color: #ffffff;
 }
 .news-card-leaf {
   position: absolute;
   inset: 0;
-  opacity: 0;
+  opacity: 0.12;
   transition: opacity 0.6s ease;
   z-index: 1;
 }
@@ -561,10 +708,104 @@ nav.scrolled .nav-logo {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(0.85) saturate(0.7);
 }
 .news-card:hover .news-card-leaf {
-  opacity: 0.35;
+  opacity: 1;
+}
+
+/* ===== WHO LEADS SANTÉ ===== */
+.leadership-section {
+  padding: 120px 48px;
+  background: var(--bg-primary);
+}
+.leadership-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.leadership-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 60px;
+  gap: 40px;
+}
+.leadership-header-left h3 {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+.leadership-header-left p {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  font-weight: 300;
+  max-width: 560px;
+  line-height: 1.75;
+}
+.leadership-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.leadership-card {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  min-height: 360px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  transition: all 0.4s ease;
+}
+.leadership-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.1);
+}
+.leadership-card-img {
+  position: absolute;
+  inset: 0;
+}
+.leadership-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.leadership-card:hover .leadership-card-img img {
+  transform: scale(1.03);
+}
+.leadership-card-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 30%, rgba(26,46,35,0.85) 100%);
+}
+.leadership-card-info {
+  position: relative;
+  z-index: 2;
+  padding: 40px;
+}
+.leadership-card-info h4 {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+.leadership-role {
+  font-size: 0.78rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 12px;
+}
+.leadership-card-info p {
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.8);
+  font-weight: 300;
 }
 
 /* ===== CTA BANNER ===== */
@@ -622,6 +863,7 @@ nav.scrolled .nav-logo {
   letter-spacing: 0.5px;
   text-transform: lowercase;
   transition: all 0.3s;
+  border-radius: 8px;
 }
 .cta-btn:hover { background: #fff; transform: translateY(-1px); }
 
@@ -694,17 +936,103 @@ footer {
 .reveal-d1 { transition-delay: 0.1s; }
 .reveal-d2 { transition-delay: 0.2s; }
 
+/* Scale-in for images */
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.92);
+  transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-scale.visible { opacity: 1; transform: scale(1); }
+
+/* Slide from left */
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-60px);
+  transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-left.visible { opacity: 1; transform: translateX(0); }
+
+/* Slide from right */
+.reveal-right {
+  opacity: 0;
+  transform: translateX(60px);
+  transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+/* Parallax image containers */
+.parallax-img {
+  will-change: transform;
+  transition: transform 0.1s linear;
+}
+
+/* Stagger children animation */
+.stagger-children .stagger-item {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.stagger-children.visible .stagger-item {
+  opacity: 1;
+  transform: translateY(0);
+}
+.stagger-children.visible .stagger-item:nth-child(1) { transition-delay: 0.05s; }
+.stagger-children.visible .stagger-item:nth-child(2) { transition-delay: 0.12s; }
+.stagger-children.visible .stagger-item:nth-child(3) { transition-delay: 0.19s; }
+.stagger-children.visible .stagger-item:nth-child(4) { transition-delay: 0.26s; }
+.stagger-children.visible .stagger-item:nth-child(5) { transition-delay: 0.33s; }
+
+/* Smooth counter / number wipe */
+.reveal-num {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-num.visible { opacity: 1; transform: translateY(0); }
+
+/* Hero content entrance */
+.hero-content h1 {
+  opacity: 0;
+  transform: translateY(50px);
+  animation: heroIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+}
+.hero-content .hero-tagline {
+  opacity: 0;
+  transform: translateY(40px);
+  animation: heroIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+}
+@keyframes heroIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Section divider line animation */
+.section-line {
+  width: 0;
+  height: 1px;
+  background: var(--border-mid);
+  transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  margin: 0 auto;
+}
+.section-line.visible { width: 100%; }
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1024px) {
   nav { padding: 0 28px; }
   .hero-content { padding: 120px 28px 80px; }
   .mission-section { grid-template-columns: 1fr; gap: 48px; padding: 80px 28px; }
+  .hww-section { padding: 80px 16px 0; }
+  .hww-header { padding: 0 12px; }
+  .hww-items { flex-wrap: wrap; }
+  .hww-item { flex: 1 1 45%; min-height: 120px; }
+  .hww-container { min-height: 480px; }
   .steps-section { padding: 80px 28px; }
   .steps-grid { grid-template-columns: 1fr; }
   .steps-image { min-height: 350px; }
   .values-section { padding: 80px 28px; }
   .values-top { grid-template-columns: 1fr; gap: 40px; }
   .news-section { padding: 80px 28px; }
+  .leadership-section { padding: 80px 28px; }
+  .leadership-header { flex-direction: column; align-items: flex-start; gap: 16px; }
   .cta-banner-content { padding: 60px 28px; }
   footer { padding: 60px 28px 32px; }
   .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
@@ -714,6 +1042,7 @@ footer {
   .hero-content h1 { font-size: 2.2rem; }
   .steps-header { flex-direction: column; align-items: flex-start; gap: 16px; }
   .news-cards { grid-template-columns: 1fr; }
+  .leadership-cards { grid-template-columns: 1fr; }
   .values-images { grid-template-columns: 1fr; }
   .footer-top { grid-template-columns: 1fr; gap: 28px; }
   .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
@@ -750,26 +1079,63 @@ footer {
   </div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <h1 class="reveal">There is no permanent state of normal.</h1>
-    <p class="hero-tagline reveal reveal-d1">Santé was built as a response to this emerging world.</p>
+    <h1 class="reveal">Health is our lens. Systems are our work. Outcomes are our proof.</h1>
+    <p class="hero-tagline reveal reveal-d1">Santé Global designs and runs communication systems that align people, accelerate decisions, and move organizations forward.</p>
   </div>
 </section>
 
-<!-- MISSION — maps to Amyris "Elegance of Living Factories" -->
-<section class="mission-section">
-  <div class="mission-text reveal">
-    <h3>Building a Better Mousetrap</h3>
-    <p>There has been a massive shift in how people across the environmental, social and health sectors think, behave, make decisions, organize their internal communications and work. These changes impact how companies communicate with and manage people both externally and internally.</p>
-    <p>We've built a better mousetrap — not just for capturing insights and crafting powerful messaging, but for embedding that work into systems. We design communications that consistently hit the heart and inspire action within repeatable, adaptable systems that keep brands connected to the people who matter most.</p>
-    <div class="mission-tags">
-      <span class="mission-tag">Human Health</span>
-      <span class="mission-tag">Environmental Health</span>
-      <span class="mission-tag">Social Health</span>
-      <span class="mission-tag">Organizational Health</span>
-    </div>
+<!-- HOW WE WORK — Amyris "Accelerate" style -->
+<section class="hww-section">
+  <div class="hww-header">
+    <h2 class="reveal">How We Work</h2>
+    <p class="reveal reveal-d1">Organizations come to Santé when they need to understand people more deeply, sharpen their story, and turn that story into day-to-day content, experiences, and internal communications that actually change behavior across teams, markets, and communities.</p>
   </div>
-  <div class="mission-image reveal reveal-d2">
-    <img src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=800&q=80" alt="Botanical detail">
+  <div class="hww-container reveal-scale">
+    <div class="hww-bg">
+      <img src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=1200&q=80" alt="Operating System">
+      <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&q=80" alt="Insight">
+      <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1200&q=80" alt="Strategy">
+      <img src="https://images.unsplash.com/photo-1531545514256-b1400bc00f31?w=1200&q=80" alt="Activation">
+      <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&q=80" alt="Sustainment">
+    </div>
+    <div class="hww-overlay"></div>
+    <div class="hww-items stagger-children">
+      <div class="hww-item stagger-item" data-hww="0">
+        <div class="hww-item-header">
+          <span class="hww-item-title">The Santé Operating System</span>
+          <span class="hww-item-num">01</span>
+        </div>
+        <p class="hww-item-desc">Every engagement runs through the same operating system from research to the ongoing work of publishing and iteration.</p>
+      </div>
+      <div class="hww-item stagger-item" data-hww="1">
+        <div class="hww-item-header">
+          <span class="hww-item-title">Insight</span>
+          <span class="hww-item-num">02</span>
+        </div>
+        <p class="hww-item-desc">Behavioral, cultural, market, and organizational research. Human and machine intelligence working together to surface patterns, risks, and opportunities faster.</p>
+      </div>
+      <div class="hww-item stagger-item" data-hww="2">
+        <div class="hww-item-header">
+          <span class="hww-item-title">Strategy</span>
+          <span class="hww-item-num">03</span>
+        </div>
+        <p class="hww-item-desc">Narrative, brand positioning, journeys, and communication system design. Clear decision frameworks that help leaders move, even in ambiguity.</p>
+      </div>
+      <div class="hww-item stagger-item" data-hww="3">
+        <div class="hww-item-header">
+          <span class="hww-item-title">Activation</span>
+          <span class="hww-item-num">04</span>
+        </div>
+        <p class="hww-item-desc">Storytelling, design, content, campaigns, and internal communications. Brand and product narratives, video, and experiences across channels.</p>
+      </div>
+      <div class="hww-item stagger-item" data-hww="4">
+        <div class="hww-item-header">
+          <span class="hww-item-title">Sustainment</span>
+          <span class="hww-item-num">05</span>
+        </div>
+        <p class="hww-item-desc">Ongoing publishing, optimization, and internal enablement. Systems and toolkits that keep teams shipping, not reinventing, over time.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -821,63 +1187,102 @@ footer {
   </div>
 </section>
 
-<!-- VALUES — maps to Amyris "Drive profitable, responsible growth" -->
-<section class="values-section">
-  <div class="values-top">
-    <h2 class="reveal">Drive purposeful, authentic growth</h2>
-    <div class="values-right reveal reveal-d1">
-      <p>Create brand differentiation, internal cohesion, and lasting value — while connecting authentically with the people who matter most. Santé embeds powerful messaging into repeatable, adaptable systems that keep brands alive.</p>
-      <div class="value-chips">
-        <span class="value-chip">Identity & clarity</span>
-        <span class="value-chip">Human voice</span>
-        <span class="value-chip">Repeatable systems</span>
-        <span class="value-chip">Purpose alignment</span>
-      </div>
-    </div>
-  </div>
-  <div class="values-sub-row reveal">
-    <h3 class="values-sub">See how partners have unlocked their brand purpose with Santé</h3>
-    <a href="#" class="link-underline">learn more</a>
-  </div>
-  <div class="values-images reveal reveal-d2">
-    <div class="v-img">
-      <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&q=80" alt="Landscape">
-    </div>
-    <div class="v-img">
-      <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&q=80" alt="Nature aerial">
-    </div>
-  </div>
-</section>
 
 <!-- NEWS — maps to Amyris "Explore the Chemistry of Life" -->
 <section class="news-section">
   <div class="news-inner">
     <div class="news-header">
       <div class="news-header-left">
-        <h3 class="reveal">Explore Our Thinking</h3>
-        <p class="reveal reveal-d1">Insights on the forces reshaping how organizations in health, environment and social impact communicate, connect and grow.</p>
+        <h3 class="reveal">Ways to Engage Us</h3>
+        <p class="reveal reveal-d1">Clients usually enter through one of three doors, depending on the problem in front of them.</p>
       </div>
-      <a href="#" class="link-underline reveal reveal-d2">learn more</a>
     </div>
     <div class="news-cards">
-      <a href="#" class="news-card reveal">
+      <div class="news-card reveal">
         <div class="news-card-leaf">
-          <img src="https://images.unsplash.com/photo-1546556396-11d4f4f85e93?w=300&q=80" alt="leaf">
+          <img src="https://images.unsplash.com/photo-1473773508845-188df298d2d1?w=600&q=80" alt="">
         </div>
-        <h4>Why Biotech Brands Must Lead with Purpose, Not Just Pipeline</h4>
+        <div class="card-content">
+          <h4 class="card-label">Research-Led</h4>
+          <p class="card-quote">"We need to understand people and markets."</p>
+          <ul class="card-list">
+            <li>Behavioral and cultural research</li>
+            <li>Audience and decision journeys</li>
+            <li>Concept and communications testing</li>
+            <li>Insight-to-strategy sprints with senior teams</li>
+          </ul>
+        </div>
+      </div>
+      <div class="news-card reveal reveal-d1">
+        <div class="news-card-leaf">
+          <img src="https://images.unsplash.com/photo-1488330890490-c291ecf62571?w=600&q=80" alt="">
+        </div>
+        <div class="card-content">
+          <h4 class="card-label">Strategy-Led</h4>
+          <p class="card-quote">"We need a clearer story and system."</p>
+          <ul class="card-list">
+            <li>Brand and narrative platforms</li>
+            <li>Positioning and architecture</li>
+            <li>Channel and content strategy</li>
+            <li>Experience and internal communications frameworks</li>
+          </ul>
+        </div>
+      </div>
+      <div class="news-card reveal reveal-d2">
+        <div class="news-card-leaf">
+          <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=80" alt="">
+        </div>
+        <div class="card-content">
+          <h4 class="card-label">Build-Led</h4>
+          <p class="card-quote">"We need to get things into the world."</p>
+          <ul class="card-list">
+            <li>Campaigns, launches, and programs</li>
+            <li>Design, copy, and video for internal and external audiences</li>
+            <li>Toolkits and playbooks for markets and teams</li>
+            <li>Content Studio: high-quality, systematized production and publishing when you need to ship at scale and control cost</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO LEADS SANTÉ — maps to Amyris "Explore the Chemistry of Life" -->
+<section class="leadership-section">
+  <div class="leadership-inner">
+    <div class="leadership-header">
+      <div class="leadership-header-left">
+        <h3 class="reveal">Who Leads Santé</h3>
+        <p class="reveal reveal-d1">Santé is led by two complementary partners who have worked together for more than two decades. Many clients begin with Mike or Ed and stay because of the integrated system and team behind them.</p>
+      </div>
+    </div>
+    <div class="leadership-cards">
+      <a href="#" class="leadership-card reveal-left">
+        <div class="leadership-card-img">
+          <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&q=80" alt="">
+        </div>
+        <div class="leadership-card-info">
+          <h4>Mike Fung</h4>
+          <p class="leadership-role">CEO & Co-Founder</p>
+          <p>Strategy, story, systems, and creative leadership. Former executive creative director with deep experience guiding complex stakeholder environments for organizations, including Roche, the National AIDS Memorial, Broadcom, Milken Institute, method, Sony, and GAP.</p>
+        </div>
       </a>
-      <a href="#" class="news-card reveal reveal-d1">
-        <div class="news-card-leaf">
-          <img src="https://images.unsplash.com/photo-1488330890490-c291ecf62571?w=300&q=80" alt="leaf">
+      <a href="#" class="leadership-card reveal-right">
+        <div class="leadership-card-img">
+          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=80" alt="">
         </div>
-        <h4>The Shift in Environmental Messaging: From Sacrifice to Self-Reliance</h4>
+        <div class="leadership-card-info">
+          <h4>Ed Dilworth</h4>
+          <p class="leadership-role">Chief Strategy Officer</p>
+          <p>Ed leads Santé Global's strategic direction, focusing on client growth and success. With over 20 years of experience in customer behavior research, Ed has partnered with brands such as Merck, Maybelline, and Shake Shack to align corporate strategy with impactful solutions.</p>
+        </div>
       </a>
     </div>
   </div>
 </section>
 
 <!-- CTA BANNER — maps to Amyris "Partner with us" -->
-<section class="cta-banner">
+<section class="cta-banner reveal-scale">
   <div class="cta-banner-bg">
     <img src="https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=1600&q=80" alt="">
   </div>
@@ -893,7 +1298,7 @@ footer {
   <div class="footer-inner">
     <div class="footer-top">
       <div>
-        <p class="footer-brand-tagline">There is no permanent state of normal.™</p>
+        <p class="footer-brand-tagline">Santé Global</p>
       </div>
       <div class="footer-col">
         <h5>Contact</h5>
@@ -913,17 +1318,37 @@ footer {
 </footer>
 
 <script>
-// Scroll reveals
+// Scroll reveals - observe all animated elements
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) entry.target.classList.add('visible');
   });
 }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+document.querySelectorAll('.reveal, .reveal-scale, .reveal-left, .reveal-right, .stagger-children, .reveal-num, .section-line').forEach(el => observer.observe(el));
 
 // Nav scroll
 window.addEventListener('scroll', () => {
   document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// Parallax on scroll for images
+const parallaxElements = document.querySelectorAll('.leadership-card-img img, .steps-image img.active');
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  document.querySelectorAll('.leadership-card').forEach(card => {
+    const rect = card.getBoundingClientRect();
+    const center = rect.top + rect.height / 2;
+    const offset = (center - window.innerHeight / 2) * 0.06;
+    const img = card.querySelector('.leadership-card-img img');
+    if (img) img.style.transform = `translateY(${offset}px) scale(1.08)`;
+  });
+  document.querySelectorAll('.news-card').forEach(card => {
+    const rect = card.getBoundingClientRect();
+    const center = rect.top + rect.height / 2;
+    const offset = (center - window.innerHeight / 2) * 0.04;
+    const img = card.querySelector('.news-card-leaf img');
+    if (img) img.style.transform = `translateY(${offset}px)`;
+  });
 });
 
 // Step accordion with image switching
@@ -936,6 +1361,22 @@ stepItems.forEach(item => {
     item.classList.add('active');
     const idx = parseInt(item.dataset.step);
     if (stepImages[idx]) stepImages[idx].classList.add('active');
+  });
+});
+
+// How We Work items with image switching (toggle)
+const hwwItems = document.querySelectorAll('.hww-item');
+const hwwImages = document.querySelectorAll('.hww-bg img');
+hwwItems.forEach(item => {
+  item.addEventListener('click', () => {
+    const wasActive = item.classList.contains('active');
+    hwwItems.forEach(i => i.classList.remove('active'));
+    hwwImages.forEach(img => img.classList.remove('active'));
+    if (!wasActive) {
+      item.classList.add('active');
+      const idx = parseInt(item.dataset.hww);
+      if (hwwImages[idx]) hwwImages[idx].classList.add('active');
+    }
   });
 });
 </script>
